@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: sample-dashboard-project
+  datasource:
+    url: jdbc:h2:mem:dashboard;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: never
+
+# Default (above) keeps include-message: always, since the themed error page
+# and the /orders/cancelled trigger are deliberate demo features that show
+# the real exception message. Run with `prod` active to lock that down before
+# any real deployment - showing raw exception text to untrusted clients is an
+# information-disclosure risk once this stops being a demo.
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server:
+  error:
+    include-message: never
